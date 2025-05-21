@@ -7,24 +7,29 @@ import {
   Card,
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
+import { Input, PasswordInput } from "../components/ui/input";
 import { Label } from "../components/ui/label";
-import { Github,Apple } from 'lucide-react';
+import { Github, Apple } from "lucide-react";
 
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
+import { Link } from "react-router-dom";
 
+// Validation schema
 const loginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string().min(6, "Too Short!").required("Required"),
+  password: Yup.string().min(6, "Too short!").required("Required"),
 });
 
-
 export default function LoginPage() {
-  const handleLogin = (values) => {
-    console.log("Login values:", values);
-    // Perform login logic here (API call, etc.)
-  };
+  const formik = useFormik({
+    initialValues: { email: "", password: "" },
+    validationSchema: loginSchema,
+    onSubmit: (values) => {
+      console.log("Login values:", values);
+      // Handle login (e.g. API call)
+    },
+  });
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted px-4">
@@ -34,50 +39,46 @@ export default function LoginPage() {
         </CardHeader>
 
         <CardContent>
-          <Formik
-            initialValues={{ email: "", password: "" }}
-            validationSchema={loginSchema}
-            onSubmit={handleLogin}
-          >
-            {() => (
-              <Form className="space-y-4">
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Field
-                    as={Input}
-                    name="email"
-                    type="email"
-                    placeholder="you@example.com"
-                  />
-                  <ErrorMessage
-                    name="email"
-                    component="p"
-                    className="text-sm text-red-500"
-                  />
-                </div>
+          <form onSubmit={formik.handleSubmit} className="space-y-4">
+            {/* Email */}
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+              />
+              {formik.touched.email && formik.errors.email && (
+                <p className="text-sm text-red-500">{formik.errors.email}</p>
+              )}
+            </div>
 
-                <div>
-                  <Label htmlFor="password">Password</Label>
-                  <Field
-                    as={Input}
-                    name="password"
-                    type="password"
-                    placeholder="••••••••"
-                  />
-                  <ErrorMessage
-                    name="password"
-                    component="p"
-                    className="text-sm text-red-500"
-                  />
-                </div>
+            {/* Password */}
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <PasswordInput
+                id="password"
+                name="password"
+                placeholder="••••••••"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+              />
+              {formik.touched.password && formik.errors.password && (
+                <p className="text-sm text-red-500">{formik.errors.password}</p>
+              )}
+            </div>
 
-                <Button variant='outline' asChild={false} className="w-full">
-                  Login
-                </Button>
-              </Form>
-            )}
-          </Formik>
+            <Button type="submit" className="w-full">
+              Login
+            </Button>
+          </form>
 
+          {/* OR Divider */}
           <div className="relative my-4 text-center">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300" />
@@ -87,12 +88,13 @@ export default function LoginPage() {
             </div>
           </div>
 
+          {/* Social Auth Buttons */}
           <div className="flex flex-col space-y-2">
             <Button
               variant="outline"
               className="w-full flex items-center justify-center gap-2"
             >
-              <Apple size={20} /> Continue with Google
+              <Apple size={20} /> Continue with Apple
             </Button>
             <Button
               variant="outline"
@@ -105,13 +107,11 @@ export default function LoginPage() {
 
         <CardFooter className="justify-center text-sm">
           Don’t have an account?{" "}
-          <a href="/register" className="ml-1 text-blue-600 underline">
+          <Link to="/register" className="ml-1 text-blue-600 underline">
             Register here
-          </a>
+          </Link>
         </CardFooter>
       </Card>
     </div>
   );
 }
-
-

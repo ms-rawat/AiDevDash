@@ -48,6 +48,14 @@ const resolvers = {
       };
       return newSnippet;
     },
+      register: async (_, { input }) => {
+    // Register logic (validate, hash password, store in DB, etc.)
+    return {
+      id: newUser.id,
+      email: newUser.email,
+      name: newUser.name
+    };
+  }
   },
 };
 

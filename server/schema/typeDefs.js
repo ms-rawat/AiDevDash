@@ -21,10 +21,25 @@ const typeDefs = `#graphql
     tasks: [Task!]!
     snippets: [Snippet!]!
   }
+    
+  input RegisterInput {
+  email: String!
+  password: String!
+  name: String!
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
+}
+
 
   type Mutation {
     addTask(title: String!, description: String): Task!
     addSnippet(title: String!, code: String!, language: String): Snippet!
+    register(input: RegisterInput!): User!
+
   }
 `;
 
