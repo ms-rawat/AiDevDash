@@ -1,5 +1,5 @@
 
-const typeDefs = `#graphql
+export const typeDefs = `#graphql
   type Task {
     id: ID!
     title: String!
@@ -43,4 +43,3 @@ type User {
   }
 `;
 
-export default typeDefs;

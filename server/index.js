@@ -1,23 +1,38 @@
-import { ApolloServer } from 'apollo-server-express';
-import express from 'express'
-import cors from 'cors'
-const app = express();
-app.use(cors());
-import { typeDefs } from './schema/typeDefs.js';
-import { resolvers } from './schema/resolvers.js';
+// server.js
+
+import express from 'express';
+import cors from 'cors';
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
 import connectDB from './db.js';
+import { typeDefs } from './schema/typeDefs.js';
+import resolvers from './schema/resolvers.js';
 
+// Initialize Express app
+const app = express();
 
+// Connect to the database
+// await connectDB();
 
-await connectDB()
+// Create Apollo Server instance
 const server = new ApolloServer({
-    typeDefs,
-    resolvers
-})
+  typeDefs,
+  resolvers,
+});
 
-
+// Start Apollo Server
 await server.start();
-server.applyMiddleware({app});
 
+// Apply middleware
+app.use(
+  '/graphql',
+  cors(),
+  express.json(),
+  expressMiddleware(server)
+);
+
+// Start the Express server
 const PORT = process.env.PORT || 4000;
-app.listen(PORT,()=>console.log(`Server ready at localhost @port4000 ${server.graphqlPath}`))
+app.listen(PORT, () => {
+  console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);
+});

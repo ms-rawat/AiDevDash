@@ -39,8 +39,19 @@ export default function RegistrationPage() {
     },
     validationSchema: registrationSchema,
     onSubmit: (values) => {
-      console.log("Registration values:", values);
-      // Perform registration logic here
+        try{
+          cosnt data = await registerUser({
+            variables:{
+              input: {
+                name:values.name,
+                email: values.email,
+                password : values.password,
+              }
+            }
+          })
+        }catch(error){
+          console.log("Registration error",error);
+        }
     },
   });
 

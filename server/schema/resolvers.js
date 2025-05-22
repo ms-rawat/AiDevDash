@@ -1,3 +1,4 @@
+
 const resolvers = {
   Query: {
     hello: () => 'Hello from the Developer Dashboard GraphQL API!',
@@ -49,7 +50,15 @@ const resolvers = {
       return newSnippet;
     },
       register: async (_, { input }) => {
-    // Register logic (validate, hash password, store in DB, etc.)
+        const {name, email, password} = input;
+
+        //checking i user Exists
+        const existnguser = await User.findOne({email});
+        if(existnguser){
+          throw new Error("User already exists with this email");
+        }
+        const newUser = new User({name, email, password});
+        await newUser.save();
     return {
       id: newUser.id,
       email: newUser.email,
