@@ -38,9 +38,9 @@ export default function RegistrationPage() {
       confirmPassword: "",
     },
     validationSchema: registrationSchema,
-    onSubmit: (values) => {
+    onSubmit: async(values) => {
         try{
-          cosnt data = await registerUser({
+          const data = await registerUser({
             variables:{
               input: {
                 name:values.name,

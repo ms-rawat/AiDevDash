@@ -12,7 +12,7 @@ import resolvers from './schema/resolvers.js';
 const app = express();
 
 // Connect to the database
-// await connectDB();
+await connectDB();
 
 // Create Apollo Server instance
 const server = new ApolloServer({
