@@ -1,18 +1,23 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LoginPage from "./pages/Login";
-import Reginstration from "./pages/Reginstration";
+import LoginPage from "./pages/auth/Login";
+import Reginstration from "./pages/auth/Reginstration";
+import Dashboard from "./pages/dashboard/Dashboard";
+import { Provider } from "react-redux";
+import { store } from "./Redux/Store";
 
 
 const router = createBrowserRouter([
     { path : '/', element: <LoginPage/> },
   { path : '/login', element: <LoginPage/> },
-  {path :'/register',element:<Reginstration/> }
+  {path :'/register',element:<Reginstration/> },
+  {path :'/dashboard',element:<Dashboard/> }
 
 ])
 
 
 function App(){
-  return <RouterProvider router={router}/>
+  return    <Provider store={store} > <RouterProvider router={router}/></Provider>
+
 }
 
 export default App

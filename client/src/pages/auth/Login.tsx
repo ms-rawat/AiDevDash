@@ -1,57 +1,46 @@
-// components/RegistrationPage.jsx
+// components/LoginPage.jsx
 import {
   CardHeader,
   CardTitle,
   CardContent,
   CardFooter,
   Card,
-} from "../components/ui/card";
-import { Button } from "../components/ui/button";
-import { Input, PasswordInput } from "../components/ui/input";
-import { Label } from "../components/ui/label";
-import { Github, Apple } from "lucide-react";
+} from "../../components/ui/card";
+import { Button } from "../../components/ui/button";
+import { Input, PasswordInput } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
+import { Github, Apple, Variable } from "lucide-react";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { REGISTER_USER } from "../graphql/mutation";
+import { LOGIN_USER } from "../../graphql/mutation";
 
-// Validation Schema
-const registrationSchema = Yup.object().shape({
-  name: Yup.string().required("Full name is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string().min(6, "Minimum 6 characters").required("Password is required"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Please confirm your password"),
+// Validation schema
+const loginSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string().min(6, "Too short!").required("Required"),
 });
 
-export default function RegistrationPage() {
-  const [registerUser, { loading, error, data }] = useMutation(REGISTER_USER);
+export default function LoginPage() {
+  const [LoginUser, {loading, error, data}] = useMutation(LOGIN_USER);
 
   const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-    validationSchema: registrationSchema,
-    onSubmit: async(values) => {
-        try{
-          const data = await registerUser({
+    initialValues: { email: "", password: "" },
+    validationSchema: loginSchema,
+    onSubmit: async (values) => {
+      console.log("Login values:", values);
+      try{
+          const data = await LoginUser({
             variables:{
-              input: {
-                name:values.name,
-                email: values.email,
-                password : values.password,
-              }
+              email : values.email,
+              password : values.password
             }
           })
-        }catch(error){
-          console.log("Registration error",error);
-        }
+      }catch(error){
+        console.log("Registration error",error)
+      }
     },
   });
 
@@ -59,28 +48,11 @@ export default function RegistrationPage() {
     <div className="flex min-h-screen items-center justify-center bg-muted px-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader>
-          <CardTitle className="text-2xl text-center">Register</CardTitle>
+          <CardTitle className="text-2xl text-center">Login</CardTitle>
         </CardHeader>
 
         <CardContent>
           <form onSubmit={formik.handleSubmit} className="space-y-4">
-            {/* Name */}
-            <div>
-              <Label htmlFor="name">Full Name</Label>
-              <Input
-                id="name"
-                name="name"
-                type="text"
-                placeholder="John Doe"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.name}
-              />
-              {formik.touched.name && formik.errors.name && (
-                <p className="text-sm text-red-500">{formik.errors.name}</p>
-              )}
-            </div>
-
             {/* Email */}
             <div>
               <Label htmlFor="email">Email</Label>
@@ -114,25 +86,8 @@ export default function RegistrationPage() {
               )}
             </div>
 
-            {/* Confirm Password */}
-            <div>
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <PasswordInput
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="••••••••"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.confirmPassword}
-              />
-              {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-                <p className="text-sm text-red-500">{formik.errors.confirmPassword}</p>
-              )}
-            </div>
-
-            {/* Submit */}
             <Button type="submit" className="w-full">
-              Register
+              Login
             </Button>
           </form>
 
@@ -146,7 +101,7 @@ export default function RegistrationPage() {
             </div>
           </div>
 
-          {/* OAuth Buttons */}
+          {/* Social Auth Buttons */}
           <div className="flex flex-col space-y-2">
             <Button
               variant="outline"
@@ -164,9 +119,9 @@ export default function RegistrationPage() {
         </CardContent>
 
         <CardFooter className="justify-center text-sm">
-          Already have an account?{" "}
-          <Link to="/login" className="ml-1 text-blue-600 underline">
-            Login here
+          Don’t have an account?{" "}
+          <Link to="/register" className="ml-1 text-blue-600 underline">
+            Register here
           </Link>
         </CardFooter>
       </Card>

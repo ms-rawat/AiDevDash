@@ -1,4 +1,3 @@
-
 export const typeDefs = `#graphql
   type Task {
     id: ID!
@@ -28,18 +27,27 @@ export const typeDefs = `#graphql
   name: String!
 }
 
+input LoginInput {
+email: String,
+password: String,
+
+}
+
 type User {
   id: ID!
   email: String!
   name: String!
 }
+type AuthPayload {
+  token: String!
+  user: User!
+}
 
-
-  type Mutation {
+type Mutation {
     addTask(title: String!, description: String): Task!
     addSnippet(title: String!, code: String!, language: String): Snippet!
     register(input: RegisterInput!): User!
+    login(input: LoginInput!): AuthPayload!
 
   }
 `;
-
