@@ -29,31 +29,39 @@ export default function Sidebar() {
   };
 
   return (
-    <motion.aside
-      ref={sidebarRef}
-      className="fixed top-0 left-0 h-full bg-gradient-to-b from-slate-900 to-slate-800 text-white shadow-xl z-50"
-      animate={{ width: isCollapsed ? 60 : width }}
-      transition={{ type: 'tween', duration: 0.3 }}
+  <motion.aside
+  ref={sidebarRef}
+  className="fixed top-0 left-0 h-full bg-gradient-to-b from-slate-900 to-slate-800 text-white shadow-xl z-50"
+  animate={{ width: isCollapsed ? 60 : width }}
+  transition={{ type: 'tween', duration: 0.3 }}
+>
+  {/* Full height, column layout */}
+  <div className="flex flex-col h-full relative bg-gray-900 text-white">
+
+    {/* Top-aligned toggle button */}
+    <button
+      onClick={() => dispatch(toggleCollapse())}
+      className="p-2 hover:bg-slate-700 text-left"
     >
-      <div className="h-full flex flex-col relative">
-        <button
-          onClick={() => dispatch(toggleCollapse())}
-          className="p-2 hover:bg-slate-700"
-        >
-          ☰
-        </button>
-        <nav className="flex-1 overflow-y-auto">
-          {sidebarData.map((item, index) => (
-            <SidebarItem key={index} {...item} isCollapsed={isCollapsed} />
-          ))}
-        </nav>
-        {!isCollapsed && (
-          <div
-            onMouseDown={handleMouseDown}
-            className="absolute top-0 right-0 h-full w-1 cursor-col-resize bg-slate-600 opacity-20 hover:opacity-50"
-          />
-        )}
-      </div>
-    </motion.aside>
+      ☰
+    </button>
+
+    {/* Scrollable sidebar items */}
+    <nav className="flex-1 overflow-y-auto">
+      {sidebarData.map((item, index) => (
+        <SidebarItem key={index} {...item} isCollapsed={isCollapsed} />
+      ))}
+    </nav>
+
+    {/* Resizer only when expanded */}
+    {!isCollapsed && (
+      <div
+        onMouseDown={handleMouseDown}
+        className="absolute top-0 right-0 h-full w-1 cursor-col-resize bg-slate-600 opacity-20 hover:opacity-50"
+      />
+    )}
+  </div>
+</motion.aside>
+
   );
 }

@@ -23,12 +23,12 @@ const registrationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().min(6, "Minimum 6 characters").required("Password is required"),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .oneOf([Yup.ref("password")], "Passwords must match")
     .required("Please confirm your password"),
 });
 
 export default function RegistrationPage() {
-  const [registerUser, { loading, error, data }] = useMutation(REGISTER_USER);
+  const [registerUser] = useMutation(REGISTER_USER);
 
   const formik = useFormik({
     initialValues: {
@@ -40,7 +40,7 @@ export default function RegistrationPage() {
     validationSchema: registrationSchema,
     onSubmit: async(values) => {
         try{
-          const data = await registerUser({
+           await registerUser({
             variables:{
               input: {
                 name:values.name,
