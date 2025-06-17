@@ -1,59 +1,44 @@
 @import "tailwindcss";
 
-// Define your design tokens using @theme
-@theme {
-  // Default (light mode) tokens
-  --color-background: #ffffff;
-  --color-foreground: #111111;
-  --color-card: #f5f5f5;
-  --color-card-foreground: #111111;
-  --color-primary: #111111;
-  --color-primary-foreground: #ffffff;
-  --color-secondary: #e2e8f0;
-  --color-secondary-foreground: #111111;
-  --color-muted-foreground: #6b7280;
-  --color-border: #e5e7eb;
-  --color-ring: #3b82f6;
+@custom-variant dark (&:where(.dark, .dark *));
+:root {
+  /* ===== Light Theme ===== */
+  --color-background-primary: #ffffff;
+  --color-text-primary: #0f172a;         /* Slate-900 */
+  --color-background-secondary: #f8fafc; /* Slate-50 */
+  --color-text-secondary: #475569;       /* Slate-600 */
+  --color-border-default: #e2e8f0;       /* Slate-200 */
+  --color-primary-brand: #2563eb;        /* Blue-600 */
+  --color-accent: #3b82f6;               /* Blue-500 */
+  --color-muted: #94a3b8;                /* Slate-400 */
 
-  // Dark mode overrides using the @variant directive
-  @variant dark {
-    --color-background: #111111;
-    --color-foreground: #ffffff;
-    --color-card: #1f2937;
-    --color-card-foreground: #ffffff;
-    --color-primary: #ffffff;
-    --color-primary-foreground: #111111;
-    --color-secondary: #374151;
-    --color-secondary-foreground: #ffffff;
-    --color-muted-foreground: #9ca3af;
-    --color-border: #4b5563;
-    --color-ring: #60a5fa;
-  }
+  --font-heading: "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
 }
 
-@tailwind utilities;
+.dark {
+  /* ===== Dark Theme ===== */
+  --color-background-primary: #0f172a;   /* Slate-900 */
+  --color-text-primary: #f1f5f9;         /* Slate-100 */
+  --color-background-secondary: #1e293b; /* Slate-800 */
+  --color-text-secondary: #cbd5e1;       /* Slate-300 */
+  --color-border-default: #334155;       /* Slate-700 */
+  --color-primary-brand: #3b82f6;        /* Blue-500 */
+  --color-accent: #60a5fa;               /* Blue-400 */
+  --color-muted: #64748b;                /* Slate-500 */
+}
 
-// Apply variables in the base layer
-@layer base {
-  body {
-    /* Access tokens directly using the `--` prefix (e.g., --color-background) */
-    @apply bg-[var(--color-background)] text-[var(--color-foreground)] transition-colors duration-300;
-  }
+/* Tailwind CSS @theme directive integration */
+@theme {
+  --color-background-primary: var(--color-background-primary);
+  --color-text-primary: var(--color-text-primary);
+  --color-background-secondary: var(--color-background-secondary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-border-default: var(--color-border-default);
+  --color-primary-brand: var(--color-primary-brand);
+  --color-accent: var(--color-accent);
+  --color-muted: var(--color-muted);
 
-  // You can also apply these tokens to other elements as needed
-  .card {
-    @apply bg-[var(--color-card)] text-[var(--color-card-foreground)] border-[var(--color-border)];
-  }
-
-  .btn-primary {
-    @apply bg-[var(--color-primary)] text-[var(--color-primary-foreground)] ring-[var(--color-ring)];
-  }
-
-  .btn-secondary {
-    @apply bg-[var(--color-secondary)] text-[var(--color-secondary-foreground)];
-  }
-
-  .text-muted {
-    @apply text-[var(--color-muted-foreground)];
-  }
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
 }
