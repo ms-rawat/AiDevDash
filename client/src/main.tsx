@@ -1,9 +1,9 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.tsx";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { Provider } from "react-redux";
 import { store } from "./Redux/Store.ts";
+import App from "./App.tsx";
 
 const Client = new ApolloClient({
   uri: "http://localhost:4000/graphql",

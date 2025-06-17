@@ -1,25 +1,24 @@
-import Sidebar from '@/components/sidebar_package/components/sidebar/Sidebar'
-import { Outlet } from 'react-router-dom'
-import Header from '../components/Header/Header';
-
+import Sidebar from "@/components/sidebar_package/components/sidebar/Sidebar";
+import { Outlet } from "react-router-dom";
+import Header from "../components/Header/Header";
 
 function Layout() {
   return (
-       <div className="flex min-h-screen bg-gray-100">
+    <div className="flex flex-row">
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r shadow-sm">
+      <aside className="">
         <Sidebar />
       </aside>
-      <Header/>
-
-      {/* Main Content Area */}
-      <main className="flex-1 p-4 overflow-y-auto">
-        {/* Routed Content */}
-        <Outlet />
-      </main>
+      <div className="flex flex-col bg-background-primary">
+        <Header />
+        {/* Main Content Area */}
+        <main className="flex-1 p-4 overflow-y-auto">
+          {/* Routed Content */}
+          <Outlet />
+        </main>
+      </div>
     </div>
-
-  )
+  );
 }
 
-export default Layout
+export default Layout;

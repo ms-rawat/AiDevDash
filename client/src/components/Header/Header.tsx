@@ -1,8 +1,8 @@
 function Header() {
   return (
-    <div>
-      <header className="flex items-center justify-between px-4 py-2 bg-white shadow-md">
-        <div className="text-lg font-semibold text-gray-800">MyLogo</div>
+    <div className="border-[0.5px] border-gray-700 dark:border-b-gray-100 py-2">
+      <header className="flex items-center justify-between px-4 py-2  shadow-md">
+        <div className="text-lg font-semibold text-text-secondary">MyLogo</div>
 
         <div className="flex-1 mx-4 hidden sm:block">
           <input
@@ -12,7 +12,7 @@ function Header() {
           />
         </div>
 
-        <button className="sm:hidden p-2 rounded-md hover:bg-gray-100 focus:outline-none">
+        <button className="sm:hidden p-2 rounded-md  focus:outline-none">
           <svg
             className="w-6 h-6 text-gray-700"
             fill="none"
