@@ -1,10 +1,13 @@
-import React from 'react'
-import Sidebar from '../../components/sidebar_package/components/sidebar/Sidebar'
+
+import AllProjects from "../tasks/AllProjects";
 
 function Dashboard() {
+
   return (
-    <div><Sidebar/></div>
-  )
+   <div className="w-full h-full ">
+    <AllProjects/>
+   </div>
+  );
 }
 
-export default Dashboard
+export default Dashboard;

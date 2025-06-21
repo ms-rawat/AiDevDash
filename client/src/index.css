@@ -1,1 +1,43 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+:root {
+  /* ===== Light Theme ===== */
+  --color-background-primary: #ffffff;
+  --color-text-primary: #0f172a;         /* Slate-900 */
+  --color-background-secondary: #f8fafc; /* Slate-50 */
+  --color-text-secondary: #475569;       /* Slate-600 */
+  --color-border-default: #e2e8f0;       /* Slate-200 */
+  --color-primary-brand: #2563eb;        /* Blue-600 */
+  --color-accent: #3b82f6;               /* Blue-500 */
+  --color-muted: #94a3b8;                /* Slate-400 */
+
+  --font-heading: "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+.dark {
+  /* ===== Dark Theme ===== */
+  --color-background-primary: #0f172a;   /* Slate-900 */
+  --color-text-primary: #f1f5f9;         /* Slate-100 */
+  --color-background-secondary: #1e293b; /* Slate-800 */
+  --color-text-secondary: #cbd5e1;       /* Slate-300 */
+  --color-border-default: #334155;       /* Slate-700 */
+  --color-primary-brand: #3b82f6;        /* Blue-500 */
+  --color-accent: #60a5fa;               /* Blue-400 */
+  --color-muted: #64748b;                /* Slate-500 */
+}
+
+/* Tailwind CSS @theme directive integration */
+@theme {
+  --color-background-primary: var(--color-background-primary);
+  --color-text-primary: var(--color-text-primary);
+  --color-background-secondary: var(--color-background-secondary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-border-default: var(--color-border-default);
+  --color-primary-brand: var(--color-primary-brand);
+  --color-accent: var(--color-accent);
+  --color-muted: var(--color-muted);
+
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+}

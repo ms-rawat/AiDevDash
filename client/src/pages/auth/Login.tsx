@@ -9,11 +9,11 @@ import {
 import { Button } from "../../components/ui/button";
 import { Input, PasswordInput } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-import { Github, Apple, Variable } from "lucide-react";
+import { Github, Apple } from "lucide-react";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../graphql/mutation";
 
@@ -24,20 +24,28 @@ const loginSchema = Yup.object().shape({
 });
 
 export default function LoginPage() {
-  const [LoginUser, {loading, error, data}] = useMutation(LOGIN_USER);
-
+  const [LoginUser] = useMutation(LOGIN_USER);
+  const navigate= useNavigate()
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: loginSchema,
     onSubmit: async (values) => {
       console.log("Login values:", values);
       try{
-          const data = await LoginUser({
+        const result =   await LoginUser({
             variables:{
               email : values.email,
               password : values.password
             }
           })
+          console.log(result)
+          if(result?.data?.login?.token)
+          {
+          localStorage.setItem('token',result?.data?.login?.token)
+           navigate('/dashboard')
+
+          }
+          
       }catch(error){
         console.log("Registration error",error)
       }
