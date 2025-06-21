@@ -5,7 +5,7 @@ import {
   setWidth,
   toggleCollapse,
 } from "../../../../Redux/ReduxSlices/SidebarSlice";
-import logo from "../../../../../public/logo.png";
+import logo from "@/public/logo.png"
 import { ThemeChanger } from "@/components/ui/ThemeChanger";
 import { Menu } from "lucide-react";
 import {
@@ -59,13 +59,13 @@ export default function Sidebar() {
             <Menu className="w-5 h-5 text-[var(--color-text-secondary)]" />
           </button>
           {/* Logo positioned right after the button */}
-          <div className="ml-4">
+          <div className="ml-4 h-6 w-20 ">
             {" "}
             {/* Adjust margin as needed */}
             <img
               src={logo}
               alt="Your Logo"
-              className=" w-auto" // Adjust size as needed
+              className="rounded-lg" // Adjust size as needed
             />
           </div>
         </div>

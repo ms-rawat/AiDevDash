@@ -1,16 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
-import { 
-  LayoutDashboard, 
-  ClipboardList, 
-  Code2, 
-  Bot, 
-  Github,
-  Settings,
-  Users,
-  FileText
-} from 'lucide-react';
+
 
 interface SidebarItemProps {
   label: string;

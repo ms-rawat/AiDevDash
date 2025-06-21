@@ -19,43 +19,43 @@ interface SidebarItem {
 const sidebarData: SidebarItem[] = [
   { 
     label: 'Dashboard', 
-    icon: 'LayoutDashboard', 
+    icon: <LayoutDashboard className="w-5 h-5" />, 
     path: '/dashboard' 
   },
   { 
     label: 'Tasks', 
-    icon: 'ClipboardList', 
+    icon: <ClipboardList className="w-5 h-5" />, 
     path: '/tasks',
     notification: 3
   },
   { 
     label: 'Snippets', 
-    icon: 'Code2', 
+    icon: <Code2 className="w-5 h-5" />, 
     path: '/snippets' 
   },
   { 
     label: 'Assistant', 
-    icon: 'Bot', 
+    icon: <Bot className="w-5 h-5" />, 
     path: '/ai-assistant' 
   },
   { 
     label: 'GitHub', 
-    icon: 'Github', 
+    icon: <Github className="w-5 h-5" />, 
     path: '/github' 
   },
   { 
     label: 'Documents', 
-    icon: 'FileText', 
+    icon: <FileText className="w-5 h-5" />, 
     path: '/documents' 
   },
   { 
     label: 'Team', 
-    icon: 'Users', 
+    icon: <Users className="w-5 h-5" />, 
     path: '/team' 
   },
   { 
     label: 'Settings', 
-    icon: 'Settings', 
+    icon: <Settings className="w-5 h-5" />, 
     path: '/settings' 
   }
 ];
