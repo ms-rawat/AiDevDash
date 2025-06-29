@@ -1,0 +1,4 @@
+2025-06-21 - Mohar Singh Rawat: Merge pull request #1 from ms-rawat/jun9
+2025-06-21 - moharwisess: feat: Update sidebar component with new logo import and icon components; add new SVG assets
+2025-06-17 - moharwisess: feat: Implement project management dashboard with task cards and sidebar integration
+2025-06-17 - moharwisess: feat: Add theme toggle functionality with Radix UI switch component and update sidebar for theme integration

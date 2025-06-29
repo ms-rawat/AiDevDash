@@ -1,23 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import {
-  setWidth,
-  toggleCollapse,
-} from "../../../../Redux/ReduxSlices/SidebarSlice";
-import logo from "@/public/logo.png"
+import { setWidth, toggleCollapse } from "../../../../Redux/ReduxSlices/SidebarSlice";
+import logo from "@/public/logo.png";
 import { ThemeChanger } from "@/components/ui/ThemeChanger";
-import { Menu } from "lucide-react";
-import {
-  LayoutDashboard,
-  ClipboardList,
-  Code2,
-  Bot,
-  Github,
-  FileText,
-  Users,
-  Settings,
-} from "lucide-react";
+import { Menu, LayoutDashboard, ClipboardList, Code2, Bot, Github, FileText, Users, Settings } from "lucide-react";
+import { Link } from "react-router-dom";
+
 export default function Sidebar() {
   const { isCollapsed, width } = useSelector((state: any) => state.sidebar);
   const dispatch = useDispatch();
@@ -41,124 +30,95 @@ export default function Sidebar() {
     document.addEventListener("mouseup", onMouseUp);
   };
 
+  const navItemClass = `flex items-center px-4 py-2 text-sm font-medium text-text-secondary hover:bg-background-secondary hover:text-text-primary rounded-md group`;
+
   return (
     <motion.aside
       ref={sidebarRef}
-      className=" h-full shadow-xl z-50 bg-gradient-to-b from-[#E6E6FA] via-[#E0E0F5] to-[#D8D8F0] dark:bg-gradient-to-b dark:from-[#1A1A2E] dark:via-[#16213E] dark:to-[#0F3460] text-[var(--color-text-primary)]"
+      className="h-screen overflow-hidden shadow-xl bg-background-primary text-text-primary transition-all"
       animate={{ width: isCollapsed ? 60 : width }}
       transition={{ type: "tween", duration: 0.3 }}
     >
-      {/* Container with column layout */}
-      <div className="flex flex-col h-full relative font-[var(--font-body)]">
-        {/* Toggle Button */}
-        <div className="flex items-center">
+      <div className="flex flex-col h-full relative font-body overflow-hidden">
+        {/* Toggle + Logo */}
+        <div className="flex items-center px-2 py-3">
           <button
             onClick={() => dispatch(toggleCollapse())}
-            className="p-3 hover:bg-[var(--color-background-secondary)] transition-colors duration-200"
+            className="p-2 hover:bg-background-secondary rounded transition-colors"
           >
-            <Menu className="w-5 h-5 text-[var(--color-text-secondary)]" />
+            <Menu className="w-5 h-5 text-muted" />
           </button>
-          {/* Logo positioned right after the button */}
-          <div className="ml-4 h-6 w-20 ">
-            {" "}
-            {/* Adjust margin as needed */}
+          <div className="ml-4">
             <img
               src={logo}
-              alt="Your Logo"
-              className="rounded-lg" // Adjust size as needed
+              alt="Logo"
+              className={`transition-all duration-300 rounded-lg ${isCollapsed ? "w-6" : "w-20"}`}
             />
           </div>
         </div>
-        {/* Sidebar Items */}
+
+        {/* Nav Items */}
         <nav className="flex-1 overflow-y-auto space-y-1 mt-2">
-          {/* Dashboard */}
-          <a
-            href="/dashboard"
-            className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-md group"
-          >
-            <LayoutDashboard className="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-600" />
-            Dashboard
-          </a>
+          <Link to="/dashboard" className={navItemClass}>
+            <LayoutDashboard className={`h-5 w-5 text-muted group-hover:text-text-primary ${!isCollapsed ? "mr-3" : ""}`} />
+            {!isCollapsed && <span>Dashboard</span>}
+          </Link>
 
-          {/* Tasks */}
-          <a
-            href="/tasks"
-            className="flex items-center justify-between px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-md group"
-          >
-            <div className="flex items-center">
-              <ClipboardList className="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-600" />
-              Tasks
+          <Link to="/tasks" className={navItemClass}>
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center">
+                <ClipboardList className={`h-5 w-5 text-muted group-hover:text-text-primary ${!isCollapsed ? "mr-3" : ""}`} />
+                {!isCollapsed && <span>Tasks</span>}
+              </div>
+              {!isCollapsed && (
+                <span className="px-2 py-1 text-xs font-bold text-white bg-error rounded-full">
+                  3
+                </span>
+              )}
             </div>
-            <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-500 rounded-full">
-              3
-            </span>
-          </a>
+          </Link>
 
-          {/* Snippets */}
-          <a
-            href="/snippets"
-            className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-md group"
-          >
-            <Code2 className="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-600" />
-            Snippets
-          </a>
+          <Link to="/snippets" className={navItemClass}>
+            <Code2 className={`h-5 w-5 text-muted group-hover:text-text-primary ${!isCollapsed ? "mr-3" : ""}`} />
+            {!isCollapsed && <span>Snippets</span>}
+          </Link>
 
-          {/* Assistant */}
-          <a
-            href="/ai-assistant"
-            className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-md group"
-          >
-            <Bot className="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-600" />
-            Assistant
-          </a>
+          <Link to="/ai-assistant" className={navItemClass}>
+            <Bot className={`h-5 w-5 text-muted group-hover:text-text-primary ${!isCollapsed ? "mr-3" : ""}`} />
+            {!isCollapsed && <span>Assistant</span>}
+          </Link>
 
-          {/* GitHub */}
-          <a
-            href="/github"
-            className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-md group"
-          >
-            <Github className="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-600" />
-            GitHub
-          </a>
+          <Link to="/github" className={navItemClass}>
+            <Github className={`h-5 w-5 text-muted group-hover:text-text-primary ${!isCollapsed ? "mr-3" : ""}`} />
+            {!isCollapsed && <span>GitHub</span>}
+          </Link>
 
-          {/* Documents */}
-          <a
-            href="/documents"
-            className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-md group"
-          >
-            <FileText className="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-600" />
-            Documents
-          </a>
+          <Link to="/documents" className={navItemClass}>
+            <FileText className={`h-5 w-5 text-muted group-hover:text-text-primary ${!isCollapsed ? "mr-3" : ""}`} />
+            {!isCollapsed && <span>Documents</span>}
+          </Link>
 
-          {/* Team */}
-          <a
-            href="/team"
-            className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-md group"
-          >
-            <Users className="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-600" />
-            Team
-          </a>
+          <Link to="/team" className={navItemClass}>
+            <Users className={`h-5 w-5 text-muted group-hover:text-text-primary ${!isCollapsed ? "mr-3" : ""}`} />
+            {!isCollapsed && <span>Team</span>}
+          </Link>
 
-          {/* Settings */}
-          <a
-            href="/settings"
-            className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-md group"
-          >
-            <Settings className="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-600" />
-            Settings
-          </a>
+          <Link to="/settings" className={navItemClass}>
+            <Settings className={`h-5 w-5 text-muted group-hover:text-text-primary ${!isCollapsed ? "mr-3" : ""}`} />
+            {!isCollapsed && <span>Settings</span>}
+          </Link>
         </nav>
 
-        {/* Theme toggle / additional options */}
-        <div className="p-3 border-t border-[var(--color-border-default)]">
+        {/* Theme Switcher */}
+        <div className="p-3 border-t border-border-default">
           <ThemeChanger />
         </div>
 
-        {/* Resizer (only if not collapsed) */}
+        {/* Resizer */}
         {!isCollapsed && (
           <div
             onMouseDown={handleMouseDown}
-            className="absolute top-0 right-0 h-full w-1 cursor-col-resize bg-[var(--color-muted)] opacity-20 hover:opacity-50 transition-opacity"
+            className="absolute top-0 right-0 h-full w-1 cursor-col-resize bg-muted opacity-20 hover:opacity-50 transition-opacity"
           />
         )}
       </div>

@@ -25,6 +25,10 @@ const router = createBrowserRouter([
         index: true, // Renders this component when the path is exactly '/'
         element: <Dashboard />, // Your main dashboard/home page
       },
+       {
+        path: "dashboard", // this matches "/dashboard"
+        element: <Dashboard />,
+      },
       // Auth Routes
       {
         path: "auth/*", // Use '*' for nested auth routes if Auth component handles them

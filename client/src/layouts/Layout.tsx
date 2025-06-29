@@ -4,16 +4,17 @@ import Header from "../components/Header/Header";
 
 function Layout() {
   return (
-    <div className="flex flex-row">
-      {/* Sidebar */}
-      <aside className="">
+    <div className="flex flex-row h-screen w-screen overflow-hidden">
+      {/* Sidebar stays inline with layout */}
+      <aside>
+        {" "}
         <Sidebar />
       </aside>
-      <div className="flex flex-col bg-background-primary">
+
+      {/* Right side: header + content */}
+      <div className="flex flex-col flex-1 bg-background-primary overflow-hidden">
         <Header />
-        {/* Main Content Area */}
         <main className="flex-1 p-4 overflow-y-auto">
-          {/* Routed Content */}
           <Outlet />
         </main>
       </div>
