@@ -25,6 +25,19 @@
 
   --font-heading: "Inter", sans-serif;
   --font-body: "Inter", sans-serif;
+
+   /* === Form-specific === */
+  --color-input-background: var(--color-surface);
+  --color-input-border: var(--color-border-default);
+  --color-input-focus: var(--color-primary);
+  --color-input-disabled: #e5e7eb;          /* Gray-200 */
+  --color-input-error: var(--color-error);
+  --color-input-placeholder: var(--color-muted);
+
+  --color-button-bg: var(--color-primary);
+  --color-button-hover: var(--color-primary-hover);
+  --color-button-text: #ffffff;
+  --color-button-disabled: #93c5fd;         /* Blue-300 */
 }
 
 .dark {
@@ -47,6 +60,19 @@
   --color-warning: #fde047;                 /* Yellow-300 */
   --color-error: #f87171;                   /* Red-400 */
   --color-info: #38bdf8;                    /* Sky-400 */
+
+  /* === Form-specific (Dark) === */
+  --color-input-background: #1e293b;
+  --color-input-border: #475569;
+  --color-input-focus: #3b82f6;
+  --color-input-disabled: #334155;
+  --color-input-error: #f87171;
+  --color-input-placeholder: #94a3b8;
+
+  --color-button-bg: #3b82f6;
+  --color-button-hover: #60a5fa;
+  --color-button-text: #ffffff;
+  --color-button-disabled: #1e40af;
 }
 
 /* Optional Theme Binding with Tailwind Autocomplete Support */
@@ -72,4 +98,17 @@
 
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
+
+  /* === Form-specific tokens === */
+  --color-input-background: var(--color-input-background);
+  --color-input-border: var(--color-input-border);
+  --color-input-focus: var(--color-input-focus);
+  --color-input-disabled: var(--color-input-disabled);
+  --color-input-error: var(--color-input-error);
+  --color-input-placeholder: var(--color-input-placeholder);
+
+  --color-button-bg: var(--color-button-bg);
+  --color-button-hover: var(--color-button-hover);
+  --color-button-text: var(--color-button-text);
+  --color-button-disabled: var(--color-button-disabled);
 }
