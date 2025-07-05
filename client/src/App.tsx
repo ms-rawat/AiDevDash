@@ -4,14 +4,16 @@ import Reginstration from "./pages/auth/Reginstration";
 import Dashboard from "./pages/dashboard/Dashboard";
 import { type RootState } from "./Redux/Store";
 import Layout from "./layouts/Layout";
-import ProjectsOverview from "./pages/tasks/ProjectsOverview";
-import NewProject from "./pages/tasks/NewProject";
-import ProjectDetails from "./pages/tasks/ProjectDetails";
+import ProjectsOverview from "./pages/Projects/ProjectsOverview";
+import NewProject from "./pages/Projects/ProjectForm";
+import ProjectDetails from "./pages/Projects/ProjectDetails";
 import NewTask from "./pages/tasks/NewTask";
 import TaskDetail from "./pages/tasks/TaskDetail";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setTheme } from "./Redux/ReduxSlices/themeSlice";
+import ScreenSizeListener from "./services/ScreenSizeListener";
+import ProjectForm from "./pages/Projects/ProjectForm";
 
 const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
@@ -25,9 +27,13 @@ const router = createBrowserRouter([
         index: true, // Renders this component when the path is exactly '/'
         element: <Dashboard />, // Your main dashboard/home page
       },
-       {
+      {
         path: "dashboard", // this matches "/dashboard"
         element: <Dashboard />,
+      },
+      {
+        path: 'ProjectForm',
+        element: <ProjectForm/>
       },
       // Auth Routes
       {
@@ -118,7 +124,12 @@ function App() {
     }
   }, [themeMode]); // Re-run this effect whenever themeMode changes
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <ScreenSizeListener />
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;

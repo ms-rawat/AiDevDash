@@ -1,24 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { setWidth, toggleCollapse } from "../../../../Redux/ReduxSlices/SidebarSlice";
 import logo from "@/public/logo.png";
 import { ThemeChanger } from "@/components/ui/ThemeChanger";
 import { Menu, LayoutDashboard, ClipboardList, Code2, Bot, Github, FileText, Users, Settings } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import type { RootState } from "@/Redux/Store";
+import { setScreenSize, toggleCollapse } from "@/Redux/ReduxSlices/SidebarSlice";
 
 export default function Sidebar() {
-  const { isCollapsed, width } = useSelector((state: any) => state.sidebar);
+const { isCollapsed,isSidebarOpen, width, screenSize } = useSelector((state: RootState) => state.sidebar);
   const dispatch = useDispatch();
   const sidebarRef = useRef(null);
-
+  const location = useLocation()
   const handleMouseDown = (e: React.MouseEvent) => {
     const startX = e.clientX;
     const startWidth = width;
 
     const onMouseMove = (e: MouseEvent) => {
       const newWidth = startWidth + (e.clientX - startX);
-      dispatch(setWidth(Math.max(200, Math.min(400, newWidth))));
+      dispatch(setScreenSize(Math.max(200, Math.min(400, newWidth))));
     };
 
     const onMouseUp = () => {
@@ -31,14 +32,24 @@ export default function Sidebar() {
   };
 
   const navItemClass = `flex items-center px-4 py-2 text-sm font-medium text-text-secondary hover:bg-background-secondary hover:text-text-primary rounded-md group`;
-
+useEffect(() => {
+  if (screenSize === 'mobile' && !isCollapsed) {
+    dispatch(toggleCollapse());
+  }
+}, [location.pathname]);
   return (
-    <motion.aside
-      ref={sidebarRef}
-      className="h-screen overflow-hidden shadow-xl bg-background-primary text-text-primary transition-all"
-      animate={{ width: isCollapsed ? 60 : width }}
-      transition={{ type: "tween", duration: 0.3 }}
-    >
+<motion.aside
+  ref={sidebarRef}
+  className={`
+    z-50 bg-background-primary text-text-primary shadow-xl transition-all h-screen
+    ${screenSize === 'mobile' && !isSidebarOpen ? 'hidden' : ''}
+    ${screenSize === 'mobile' ? 'fixed top-0 left-0' : ''}
+  `}
+  animate={{ width: isCollapsed ? 60 : width }}
+  transition={{ type: 'tween', duration: 0.3 }}
+>
+
+
       <div className="flex flex-col h-full relative font-body overflow-hidden">
         {/* Toggle + Logo */}
         <div className="flex items-center px-2 py-3">

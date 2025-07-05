@@ -1,5 +1,5 @@
+import AllProjects from "../Projects/AllProjects";
 
-import AllProjects from "../tasks/AllProjects";
 
 function Dashboard() {
 
