@@ -1,63 +1,42 @@
 import React from 'react'
+import { gql, useQuery } from '@apollo/client'
 import ProjectCard from './ProjectCard'
 
+const GET_PROJECTS = gql`
+  query GetProjects {
+    projects {
+      id
+      name
+      description
+      createdAt
+    }
+  }
+`
+
+interface Project {
+  id: string
+  name: string
+  description: string
+  createdAt: string
+}
+interface GetProjectsResponse {
+  projects: Project[]
+}
 
 
-const tasks: Task[] = [
-  {
-    title: "Design new landing page",
-    description: "Create a modern and responsive landing page design",
-    priority: "High",
-    status: "In Progress",
-    user: { name: "Sarah Chen", initials: "SC", color: "bg-indigo-500" },
-  },
-  {
-    title: "Update user documentation",
-    description: "Review and update all user guides",
-    priority: "Medium",
-    status: "To Do",
-    user: { name: "Mike Johnson", initials: "MJ", color: "bg-green-600" },
-  },
-  {
-    title: "Fix payment integration",
-    description: "Debug and fix payment processing issues",
-    priority: "High",
-    status: "Done",
-    user: { name: "Alex Kumar", initials: "AK", color: "bg-red-600" },
-  },
-  {
-    title: "Implement AI chatbot",
-    description: "Develop intelligent customer support system",
-    priority: "High",
-    status: "In Progress",
-    user: { name: "Emma Davis", initials: "ED", color: "bg-purple-600" },
-  },
-  {
-    title: "Optimize database queries",
-    description: "Improve application performance and speed",
-    priority: "Medium",
-    status: "To Do",
-    user: { name: "Ryan Park", initials: "RP", color: "bg-orange-500" },
-  },
-  {
-    title: "Security audit",
-    description: "Comprehensive security review and testing",
-    priority: "High",
-    status: "Done",
-    user: { name: "Lisa Wong", initials: "LW", color: "bg-cyan-600" },
-  },
-];
-function AllProjects() {
+const AllProjects: React.FC = () => {
+  const { data, loading, error } = useQuery<GetProjectsResponse>(GET_PROJECTS)
+console.log(data)
+  if (loading) return <p>Loading projects...</p>
+  if (error) return <p>Error: {error.message}</p>
+
   return (
-    <div className="flex flex-wrap gap-6 p-6  min-h-screen">
-      {tasks.map((task, index) => (
-        <ProjectCard key={index} task={task} />
+    <div className="flex flex-wrap gap-6 p-6 min-h-screen">
+      {data?.projects.map((project) => (
+        <ProjectCard key={project.id} project={project} />
       ))}
     </div>
   )
 }
 
 export default AllProjects
-
-
-

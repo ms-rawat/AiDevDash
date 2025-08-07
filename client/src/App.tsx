@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTheme } from "./Redux/ReduxSlices/themeSlice";
 import ScreenSizeListener from "./services/ScreenSizeListener";
 import ProjectForm from "./pages/Projects/ProjectForm";
+import AllProjects from "./pages/Projects/AllProjects";
 
 const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "dashboard", // this matches "/dashboard"
         element: <Dashboard />,
+      },
+       {
+        path: 'AllProjects',
+        element: <AllProjects/>
       },
       {
         path: 'ProjectForm',

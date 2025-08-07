@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
+import Project from "../models/Project.js";
 
 // Dummy data for now (replace with DB queries as needed)
 const dummyTask = {
@@ -22,9 +23,10 @@ const dummySnippet = {
 const resolvers = {
   Query: {
 
-    projects: async () => {
-      // TODO: Fetch all projects from DB
-      return [];
+    projects : async () => {
+      const projects  = await  Project.find({});
+      return projects;  
+    
     },
 
     project: async (_, { id }) => {
@@ -55,14 +57,14 @@ const resolvers = {
 
   Mutation: {
     addProject: async (_, { name, description }) => {
-      // TODO: Insert project to DB
-      return {
-        id: Date.now().toString(),
+      const newProject = new Project({
         name,
         description,
-        createdAt: new Date().toISOString(),
-        tasks: [],
-      };
+        createdAt: new Date(),
+      })
+      await newProject.save();
+      return newProject
+  
     },
 
     updateProject: async (_, { id, name, description }) => {

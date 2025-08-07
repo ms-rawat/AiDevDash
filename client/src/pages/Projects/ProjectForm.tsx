@@ -54,7 +54,7 @@ const ProjectForm = () => {
 
           <form onSubmit={formik.handleSubmit} className="space-y-5">
             <div>
-              <Label htmlFor="name" className='text-text-secondary'>Project Name</Label>
+              <Label htmlFor="name" className='text-tex t-secondary'>Project Name</Label>
               <Input
                 id="name"
                 name="name"
